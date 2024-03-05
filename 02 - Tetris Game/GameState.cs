@@ -22,11 +22,24 @@ namespace _02___Tetris_Game
 			{
 				currentBlock = value;
 				currentBlock.Reset();
+
+				for (int i = 0; i < 2; i++)
+				{
+					currentBlock.Move(1, 0);
+
+					if (!BlockFits())
+					{
+						currentBlock.Move(-1, 0);
+					}
+				}
 			}
 		}
 		public GameGrid GameGrid { get; }
 		public BlockQueue BlockQueue { get; }
 		public bool GameOver { get; private set; }
+		public int Score { get; private set; }
+		public Block HeldBlock { get; private set; }
+		public bool CanHold {  get; private set; }
 
 		//constructor
 		public GameState()
@@ -34,6 +47,7 @@ namespace _02___Tetris_Game
 			GameGrid = new GameGrid(22, 10); //initialising the game grid with 22 rows and 10 columns
 			BlockQueue = new BlockQueue(); //initialising the blockqueue
 			CurrentBlock = BlockQueue.GetAndUpdate(); //using the blockqueue to return a random block, unique from the last one
+			CanHold = true;
 		}
 
 		//methods
@@ -48,6 +62,28 @@ namespace _02___Tetris_Game
 			}
 
 			return true;
+		}
+
+		public void HoldBlock()
+		{
+			if (!CanHold)
+			{
+				return;
+			}
+			
+			if (HeldBlock == null)
+			{
+				HeldBlock = CurrentBlock;
+				CurrentBlock = BlockQueue.GetAndUpdate();
+			}
+			else
+			{
+				Block tmp = CurrentBlock;
+				CurrentBlock = HeldBlock;
+				HeldBlock = tmp;
+			}
+
+			CanHold = false;
 		}
 
 		public void RotateBlockCW() //it rotates a block only if it's possible from where it is
@@ -101,7 +137,7 @@ namespace _02___Tetris_Game
 				GameGrid[p.Row, p.Column] = CurrentBlock.Id; // this calls the indexer to set the value of the block, so the block cells can be coloured
 			}
 
-			GameGrid.ClearFullRows();
+			Score += GameGrid.ClearFullRows();
 
 			if (IsGameOver())
 			{
@@ -110,6 +146,7 @@ namespace _02___Tetris_Game
 			else
 			{
 				CurrentBlock = BlockQueue.GetAndUpdate();
+				CanHold = true;
 			}
 		}
 
@@ -122,6 +159,36 @@ namespace _02___Tetris_Game
 				CurrentBlock.Move(-1, 0);
 				PlaceBlock();
 			}
+		}
+
+		private int TileDropDistance(Position p) //it calculates how many rows the current block can be moved down
+		{
+			int drop = 0;
+
+			while (GameGrid.IsEmpty(p.Row + drop + 1, p.Column))
+			{
+				drop++;
+			}
+
+			return drop;
+		}
+
+		public int BlockDropDistance() //it invokes the TileDropDistance() for every tile in the current block, returning the minimum distance a block can be moved
+		{
+			int drop = GameGrid.Rows;
+
+			foreach (Position p in CurrentBlock.TilePositions())
+			{
+				drop = System.Math.Min(drop, TileDropDistance(p));
+			}
+
+			return drop;
+		}
+
+		public void DropBlock() //it moves the block down as many rows as possible and places it in the grid
+		{
+			CurrentBlock.Move(BlockDropDistance(), 0);
+			PlaceBlock();
 		}
 
 	}

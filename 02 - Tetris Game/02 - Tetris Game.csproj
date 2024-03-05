@@ -7,9 +7,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Background.jpg" />
     <None Remove="Assets\Background.png" />
     <None Remove="Assets\Block-Empty.png" />
     <None Remove="Assets\Block-I.png" />
@@ -31,7 +33,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Background.png" />
+    <Resource Include="Assets\Background.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\Block-Empty.png" />
     <Resource Include="Assets\Block-I.png" />
     <Resource Include="Assets\Block-J.png" />

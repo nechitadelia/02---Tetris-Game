@@ -18,3 +18,4 @@ D:\02 IT Stuff\00 Personal Projects\02 - Tetris Game\02 - Tetris Game\obj\Debug\
 D:\02 IT Stuff\00 Personal Projects\02 - Tetris Game\02 - Tetris Game\obj\Debug\net8.0-windows\02 - Tetris Game.pdb
 D:\02 IT Stuff\00 Personal Projects\02 - Tetris Game\02 - Tetris Game\obj\Debug\net8.0-windows\02 - Tetris Game.genruntimeconfig.cache
 D:\02 IT Stuff\00 Personal Projects\02 - Tetris Game\02 - Tetris Game\obj\Debug\net8.0-windows\ref\02 - Tetris Game.dll
+D:\02 IT Stuff\00 Personal Projects\02 - Tetris Game\02 - Tetris Game\obj\Debug\net8.0-windows\02 - Tetris Game.sourcelink.json

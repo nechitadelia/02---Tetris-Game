@@ -101,7 +101,7 @@ namespace _02___Tetris_Game
 				}
 			}
 
-			return cleared;
+			return cleared; //this helps calculating the score of the player
 		}
 	}
 }
